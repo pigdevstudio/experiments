@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 64, 32 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Lift"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -320 ) ]
+}
+
+[node name="MovingPlatform" type="Node2D"]
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+motion/sync_to_physics = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="KinematicBody2D"]
+color = Color( 0.278431, 0.231373, 0.470588, 1 )
+polygon = PoolVector2Array( -64, -32, -64, 32, 64, 32, 64, -32 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="KinematicBody2D"]
+autoplay = "Lift"
+playback_process_mode = 0
+anims/Lift = SubResource( 2 )

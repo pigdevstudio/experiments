@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
+
+[sub_resource type="LineShape2D" id=1]
+normal = Vector2( 1, 0 )
+
+[sub_resource type="LineShape2D" id=2]
+normal = Vector2( -1, 0 )
+
+[node name="Level" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 704.0 ]
+}
+
+[node name="Floor" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+position = Vector2( 896, 0 )
+polygon = PoolVector2Array( 0, 448, 0, 704, 320, 704, 320, 448 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor/CollisionPolygon2D"]
+color = Color( 0.278431, 0.231373, 0.470588, 1 )
+polygon = PoolVector2Array( 0, 448, 0, 704, 320, 704, 320, 448 )
+
+[node name="Floor2" type="StaticBody2D" parent="."]
+position = Vector2( -448, 0 )
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor2"]
+position = Vector2( 896, 0 )
+polygon = PoolVector2Array( 0, 448, 0, 704, 320, 704, 320, 448, 192, 320, 128, 320 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor2/CollisionPolygon2D"]
+color = Color( 0.278431, 0.231373, 0.470588, 1 )
+polygon = PoolVector2Array( 0, 448, 0, 704, 320, 704, 320, 448, 192, 320, 128, 320 )
+
+[node name="Floor3" type="StaticBody2D" parent="."]
+position = Vector2( -896, 0 )
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor3"]
+position = Vector2( 896, 0 )
+polygon = PoolVector2Array( 0, 448, 0, 704, 320, 704, 320, 448 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor3/CollisionPolygon2D"]
+color = Color( 0.278431, 0.231373, 0.470588, 1 )
+polygon = PoolVector2Array( 0, 448, 0, 704, 320, 704, 320, 448 )
+
+[node name="WallLeft" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
+shape = SubResource( 1 )
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2( 1344, 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
+shape = SubResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 256 )
