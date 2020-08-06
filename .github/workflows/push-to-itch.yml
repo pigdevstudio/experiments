@@ -15,10 +15,10 @@ jobs:
         platform: []
     steps:
       - name: Zip
-      - uses: montudor/action-zip@v0.1.0
+        uses: montudor/action-zip@v0.1.0
         with:
           args: zip -qq -r ./dir.zip ./dir
-      - id: zip
+        id: zip
       - name: Push to Itch
         uses: josephbmanley/butler-publish-itchio-action@v1.0.1
         env:
