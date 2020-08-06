@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/Platform.tscn" type="PackedScene" id=2]
+
+[sub_resource type="LineShape2D" id=1]
+normal = Vector2( 1, 0 )
+
+[sub_resource type="LineShape2D" id=2]
+normal = Vector2( -1, 0 )
+
+[node name="Level" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [ 704.0 ]
+}
+
+[node name="Floor" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+polygon = PoolVector2Array( 0, 448, 0, 720, 1280, 728, 1280, 448 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor"]
+color = Color( 0.278431, 0.231373, 0.470588, 1 )
+polygon = PoolVector2Array( 0, 448, 0, 720, 1280, 728, 1280, 448 )
+
+[node name="WallLeft" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallLeft"]
+shape = SubResource( 1 )
+
+[node name="WallRight" type="StaticBody2D" parent="."]
+position = Vector2( 1280, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight"]
+shape = SubResource( 2 )
+
+[node name="Platforms" type="Node2D" parent="."]
+
+[node name="Platform" parent="Platforms" instance=ExtResource( 2 )]
+position = Vector2( 384, 224 )
+
+[node name="Platform5" parent="Platforms" instance=ExtResource( 2 )]
+position = Vector2( 288, 304 )
+
+[node name="Platform2" parent="Platforms" instance=ExtResource( 2 )]
+position = Vector2( 704, 96 )
+
+[node name="Platform3" parent="Platforms" instance=ExtResource( 2 )]
+position = Vector2( 960, 288 )
+
+[node name="Platform4" parent="Platforms" instance=ExtResource( 2 )]
+position = Vector2( 640, 352 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 160, 448 )
+
+[node name="Player2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 928, 448 )
+
+[node name="Player3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 480, 448 )
