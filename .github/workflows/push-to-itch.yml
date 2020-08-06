@@ -8,25 +8,49 @@ on:
       - v*.*.*
 
 jobs:
-  godot:
+  subdirs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: []
+        # List of subdirs to push to itch
+        subdirectory:
+          - 01.slope-movement
+          - 02.tilting-on-slopes
+          - 03.moving-platforms
+          - 04.path-follow-platforms
+          - 05.jump-through
+          - 06.jump-with-snap
+          - 07.selectable-object
+          - 08.selection-box
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Zip
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r ./dir.zip ./dir
-        id: zip
+        run: |
+          zip -qq -r ./${{ matrix.subdirectory }}.zip ./${{ matrix.subdirectory }}
+      - name: Push to Itch
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.1
+        env:
+          CHANNEL: ${{ matrix.subdirectory }}
+          ITCH_GAME: experiments
+          ITCH_USER: pigdev
+          PACKAGE: ${{ matrix.subdirectory }}.zip
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          VERSION_FILE: VERSION.txt
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Zip
+        run: |
+          zip -qq -r ./source.zip ./*
       - name: Push to Itch
         uses: josephbmanley/butler-publish-itchio-action@v1.0.1
         env:
           CHANNEL: experiments-bundle
           ITCH_GAME: experiments
           ITCH_USER: pigdev
-          PACKAGE: ${{ github.workspace }}/${{ steps.zip.outputs.build }}
+          PACKAGE: source.zip
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           VERSION_FILE: VERSION.txt
