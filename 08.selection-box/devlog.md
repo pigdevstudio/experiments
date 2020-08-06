@@ -1,12 +1,10 @@
-In the [Selectable Object experiment](https://pigdev.itch.io/experiments/devlog/166154/selectable-objects) we've saw how to use Area2D to create an SelectableArea to trigger selection on a single object at a time.
+In the [Selectable Object experiment](https://pigdev.itch.io/experiments/devlog/166154/selectable-objects) we've seen how to use Area2D to create a SelectableArea to trigger selection on a single object at a time.
 
 But...in strategy games, especially in the RTS genre, it's more likely that we would want players to select multiple units at once. A common solution for this kind of system is a _SelectionBox_.
 
 ![](https://img.itch.zone/aW1nLzQwMDI2NzIuZ2lm/original/9%2Bx2I2.gif)
 
-_Download the SelectionBox experiment!_
-
-<iframe frameborder="0" src="https://itch.io/embed/679971" width="552" height="167"><a href="https://pigdev.itch.io/experiments">Gamedev Experiments by Pigdev</a></iframe>
+[_Download the SelectionBox experiment!_(https://pigdev.itch.io/experiments)
 
 This is the most common approach in many user interfaces, you've probably used such thing with your OS graphic interface.
 
@@ -14,17 +12,17 @@ The SelectionBox is a rectangle that grows towards the mouse selecting everythin
 
 ![](https://img.itch.zone/aW1nLzQwMDI2NzMuZ2lm/original/QKXJpf.gif)
 
-In this experiment's approach I'm going to take advantage of the previous experiment's SelectableArea, but once you get the idea you can implement it with any CanvasItem.
+In this experiment's approach, I'm going to take advantage of the previous experiment's SelectableArea, but once you get the idea you can implement it with any CanvasItem.
 
 ## Rect resizing
 
-For this system I'm going to use a [`ColorRect`](https://docs.godotengine.org/en/stable/classes/class_colorrect.html) just to have a decent looking SelectionBox, but you can use any Control node, preferably one that serves pure graphical purposes like a TextureRect.
+For this system, I'm going to use a [`ColorRect`](https://docs.godotengine.org/en/stable/classes/class_colorrect.html) just to have a decent looking SelectionBox, but you can use any Control node, preferably one that serves pure graphical purposes like a TextureRect.
 
 Then I'll rename it _SelectionBox_ and change the _Color_ property to a transparent blue.
 
 ![](https://img.itch.zone/aW1nLzQwMDI2ODUuZ2lm/original/R6RpzM.gif)
 
-Almost everything from here is done code wise, so let's attach a script to it!
+Almost everything from here is done code-wise, so let's attach a script to it!
 
 The first that we need to do is to detect when the player presses the left mouse button, here I've created an InputAction on the _Project > Project Settings > Input Map_ and called it "selection", it refers to left mouse button input events.
 
@@ -46,9 +44,9 @@ func reset_rect():
   rect_size = Vector2.ZERO
 ```
 
-With the box in place we want to be allowed to scale it while holding the left mouse button and dragging the mouse. For that, we are going to expand the SelectionBox by setting its end point to the mouse position with the `set_end` method.
+With the box in place, we want to be allowed to scale it while holding the left mouse button and dragging the mouse. For that, we are going to expand the SelectionBox by setting its end point to the mouse position with the `set_end` method.
 
-Since we want to do this smootly whenever the mouse changes its position we are going to `expand_to_mouse`in the `_process` callback.
+Since we want to do this smoothly whenever the mouse changes its position we are going to `expand_to_mouse` in the `_process` callback.
 
 To prevent this from happening if we are not holding the left mouse button, we can toggle the `_process` callback based on if the `select` action is pressed and start without processing by calling `set_process(false)` at the `_ready` callback.
 
