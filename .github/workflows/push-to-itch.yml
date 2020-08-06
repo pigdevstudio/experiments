@@ -10,23 +10,20 @@ on:
 jobs:
   godot:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform: []
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Zip
-        uses: montudor/action-zip@v0.1.0
+        uses: papeloto/action-zip@v1
         with:
-          args: zip -qq -r ./dir.zip ./dir
-        id: zip
+          files: "*"
+          dest: source.zip
       - name: Push to Itch
         uses: josephbmanley/butler-publish-itchio-action@v1.0.1
         env:
           CHANNEL: experiments-bundle
           ITCH_GAME: experiments
           ITCH_USER: pigdev
-          PACKAGE: ${{ github.workspace }}/${{ steps.zip.outputs.build }}
+          PACKAGE: source.zip
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
           VERSION_FILE: VERSION.txt
