@@ -8,7 +8,7 @@ on:
       - v*.*.*
 
 jobs:
-  bundle:
+  subdirs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
